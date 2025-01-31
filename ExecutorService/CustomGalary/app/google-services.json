@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1075480299938",
+    "project_id": "fb-login-test-c4c81",
+    "storage_bucket": "fb-login-test-c4c81.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075480299938:android:dff9004f97c217b96a0afb",
+        "android_client_info": {
+          "package_name": "com.pro.customgalary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLAqJVSZO0Dr42pw51_ADy7SAbboO-ZFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075480299938:android:dec7afb83b900c9e6a0afb",
+        "android_client_info": {
+          "package_name": "com.pro.fb_login_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLAqJVSZO0Dr42pw51_ADy7SAbboO-ZFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
