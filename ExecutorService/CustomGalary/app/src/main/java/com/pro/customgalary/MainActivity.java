@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 openCamera();
             }
         });
-
-
     }
 
     private void openCamera() {
@@ -91,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openGallery() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("GALLERY_FRAGMENT");
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         galleryLauncher.launch(intent);
