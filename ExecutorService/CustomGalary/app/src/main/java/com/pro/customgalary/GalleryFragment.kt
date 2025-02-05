@@ -1,18 +1,28 @@
 package com.pro.customgalary
 
+import android.app.Activity
+import android.content.ContentResolver
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 
 class GalleryFragment : Fragment() {
     private var imageView: ImageView? = null
     private var imageUri: String? = null
     private var imageBitmap: Bitmap? = null
+    private var btnEdit: Button? = null
 
     companion object {
         private const val ARG_IMAGE_URI = "image_uri"
@@ -55,6 +65,7 @@ class GalleryFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_gallery, container, false)
         imageView = view.findViewById(R.id.image_view)
+        btnEdit = view.findViewById(R.id.btn_edit)
 
         imageUri?.let {
             imageView?.setImageURI(Uri.parse(it))
@@ -64,6 +75,14 @@ class GalleryFragment : Fragment() {
             imageView?.setImageBitmap(it)
         }
 
+        btnEdit?.setOnClickListener {
+            if (imageUri != null) {
+                startCrop(Uri.parse(imageUri))
+            } else {
+//                startCrop(imageBitmap)
+            }
+        }
+
         return view
     }
 
@@ -71,6 +90,29 @@ class GalleryFragment : Fragment() {
         super.onDestroy()
         imageView?.setImageDrawable(null)
         imageView = null
+    }
+
+    private val cropImageLauncher = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            val uriContent = result.uriContent
+            val uriFilePath = result.getUriFilePath(requireContext())
+
+            imageView?.setImageURI(uriContent)
+        } else {
+            val e = result.error
+        }
+    }
+
+
+    private fun startCrop(uri: Uri) {
+        cropImageLauncher.launch(
+            CropImageContractOptions(
+                uri = uri,
+                cropImageOptions = CropImageOptions(
+                    outputCompressFormat = Bitmap.CompressFormat.PNG
+                )
+            )
+        )
     }
 
 }

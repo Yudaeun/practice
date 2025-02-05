@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button btnCapture;
     private Button btnGallery;
+    private Button btnRemovePhoto;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         btnCapture = findViewById(R.id.btnCapture);
         btnGallery = findViewById(R.id.btn_open_gallery);
+        btnRemovePhoto = findViewById(R.id.btn_remove_photo);
 
         executorService = Executors.newSingleThreadExecutor(); // 단일 스레드 풀 생성하여 백그라운드 작업 수행
         handler = new Handler(Looper.getMainLooper()); // UI스레드를 ExecutorService는 Handler.post()를 사용하고, Main 스레드에서 실행
@@ -76,23 +78,29 @@ public class MainActivity extends AppCompatActivity {
                 openCamera();
             }
         });
+
+        btnRemovePhoto.setOnClickListener(v -> {
+            removePhoto();
+        });
+
     }
 
-    private void openCamera() {
+    private void removePhoto() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("GALLERY_FRAGMENT");
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
+    }
+
+    private void openCamera() {
+        removePhoto();
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, REQUEST_CAMERA);
     }
 
     private void openGallery() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("GALLERY_FRAGMENT");
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }
+        removePhoto();
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -157,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
     @Override
