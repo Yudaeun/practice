@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "52409216313",
+    "firebase_url": "https://chatting-app-7b84f-default-rtdb.firebaseio.com",
+    "project_id": "chatting-app-7b84f",
+    "storage_bucket": "chatting-app-7b84f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52409216313:android:a7ef0d19d83afde99b4ce8",
+        "android_client_info": {
+          "package_name": "com.app.chattingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEjH3xe0zXt3MZLKRMRquHBvsg_e2DBvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52409216313:android:6be7645a71b6fa819b4ce8",
+        "android_client_info": {
+          "package_name": "com.inzisoft.chattingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEjH3xe0zXt3MZLKRMRquHBvsg_e2DBvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
