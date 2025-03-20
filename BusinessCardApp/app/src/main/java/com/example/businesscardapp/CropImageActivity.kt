@@ -1,6 +1,7 @@
 package com.example.businesscardapp
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -47,5 +48,13 @@ class CropImageActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == REQUEST_CROP && resultCode == RESULT_OK) {
+            val extras = data?.extras
+            val croppedBitmap = extras?.getParcelable<Bitmap>("data")
+            binding.imgPreview.setImageBitmap(croppedBitmap)
+        }
+    }
 }

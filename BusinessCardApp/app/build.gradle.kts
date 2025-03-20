@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.businesscardapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.businesscardapp"
@@ -18,6 +19,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -50,6 +52,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.android.image.cropper)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 
 }
