@@ -9,16 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.businesscardapp.data.Card
 import com.example.businesscardapp.databinding.ItemCardBinding
 
-class CardAdapter(private val onItemClick: (Card) -> Unit) :
+class CardAdapter(private val onItemClick: (Card) -> Unit, private val onItemLongClick: (Card) -> Unit) :
     ListAdapter<Card, CardAdapter.CardViewHolder>(CardDiffCallback()) {
 
         class CardViewHolder(private val binding: ItemCardBinding) :
             RecyclerView.ViewHolder(binding.root) {
-                fun bind(card: Card, onItemClick: (Card) -> Unit) {
+                fun bind(card: Card, onItemClick: (Card) -> Unit, onItemLongClick: (Card) -> Unit) {
                     binding.cardName.text = card.name
                     binding.cardPhone.text = card.phoneNumber
                     binding.cardImage.setImageURI(Uri.parse(card.imagePath))
                     binding.root.setOnClickListener{ onItemClick(card) }
+                    binding.root.setOnLongClickListener {
+                        onItemLongClick(card)
+                        true
+                    }
                 }
             }
 
@@ -28,7 +32,7 @@ class CardAdapter(private val onItemClick: (Card) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: CardAdapter.CardViewHolder, position: Int) {
-        holder.bind(getItem(position), onItemClick)
+        holder.bind(getItem(position), onItemClick, onItemLongClick)
     }
 }
 

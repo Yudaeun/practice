@@ -22,4 +22,8 @@ class CardViewModel(application: Application) : AndroidViewModel(application) {
     fun insert(card: Card) = viewModelScope.launch {
         repository.insert(card)
     }
+
+    fun delete(card: Card) = viewModelScope.launch {
+        repository.delete(card)
+    }
 }

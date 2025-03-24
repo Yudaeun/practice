@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.businesscardapp.data.Card
 import com.example.businesscardapp.databinding.ActivityAddCardBinding
 import com.example.businesscardapp.databinding.FragmentCardDetailBinding
+import java.io.File
+import java.io.FileOutputStream
 
 class AddCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddCardBinding
@@ -35,10 +37,15 @@ class AddCardActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             val name = binding.editName.text.toString()
             val phone = binding.editPhone.text.toString()
-            imageUri?.let {
-                val card = Card(name = name, phoneNumber = phone, imagePath = it.toString())
-                cardViewModel.insert(card)
-                finish()
+            imageUri?.let { uri ->
+                val localPath = copyUriToInternalStorage(uri)
+                if (localPath != null) {
+                    val card = Card(name = name, phoneNumber = phone, imagePath = localPath)
+                    cardViewModel.insert(card)
+                    finish()
+                } else {
+                    Toast.makeText(this, "이미지를 저장할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
             } ?: Toast.makeText(this, "이미지를 선택하세요.", Toast.LENGTH_SHORT).show()
         }
     }
@@ -49,6 +56,23 @@ class AddCardActivity : AppCompatActivity() {
         if (requestCode == REQUEST_SELECT_IMAGE && resultCode == RESULT_OK) {
             imageUri = data?.data
             imageUri?.let { binding.imgPreview.setImageURI(it) }
+        }
+    }
+
+    private fun copyUriToInternalStorage(uri: Uri): String? {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val file = File(cacheDir, "card_${System.currentTimeMillis()}.jpg")
+            val outputStream = FileOutputStream(file)
+
+            inputStream.copyTo(outputStream)
+            inputStream.close()
+            outputStream.close()
+
+            file.absolutePath
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }
